@@ -5,6 +5,7 @@
 1. Python3
 2. [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 3. [curl](https://curl.se/)
+4. [airflow python package](https://pypi.org/project/apache-airflow/)
 
 ## Quickstart
 1. Clone the repo
