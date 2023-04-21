@@ -1,45 +1,37 @@
-from datetime import datetime, timedelta
-import random
+from datetime import datetime
 
 from airflow import DAG
-from airflow.operators.python import PythonOperator
-from airflow.operators.bash import BashOperator
+from airflow.decorators import task, dag
 
-#TODO Find a way to pass ti.argument to the cycle
 #TODO Find a way to create folder
 #TODO authenticate to github repo, git add. and git commit the file with dot
 #TODO do it N times based on mimic_n_commits function
 
 default_args={
     'owner' : 'active_developer',
-    'retries' : 5,
-    'retry_interval' : timedelta(minutes=2)
+    'retries' : 5
 }
 
-def get_n_of_commits(ti):
-    n_commits=random.randint(1,10)
-    ti.xcom_push(key="n_commits", value=n_commits)
+@task
+def get_n_of_commits():
+    import random
+    n = random.randint(2, 10)
+    my_list = list(range(1, n+1))
+    return my_list
 
-def do_n_commits(ti):
-    n_commits=ti.xcom_pull(task_ids='get_n_of_commits', key="n_commits")
-    for n in range(n_commits):
-        print(f"Doing {n+1}-th commit of {n_commits}")
+@task
+def do_n_commits(n):
+    # here will be code for committing to repo
+    print(f'This is {n}th commit')
 
-
-with DAG(
-    dag_id='mimic_activity_v14',
+@dag(
+    dag_id='mimic_activity_v19',
     default_args=default_args,
-    start_date=datetime(2023,4, 19),
+    start_date=datetime(2023,4, 15),
     schedule_interval='@daily'
-) as dag:
-    task1=PythonOperator(
-        task_id='get_n_of_commits',
-        python_callable=get_n_of_commits
-    )
+)
 
-    task2=PythonOperator(
-        task_id='do_n_commits',
-        python_callable=do_n_commits
-    )
+def my_dag():
+    do_n_commits.expand(n=get_n_of_commits())
 
-    task1.set_downstream(task2)
+dag=my_dag()
