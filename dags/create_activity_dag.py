@@ -5,6 +5,8 @@ from airflow import DAG
 from airflow.operators.python import PythonOperator
 from airflow.operators.bash import BashOperator
 
+#TODO Find a way to pass ti.argument to the cycle
+#TODO Find a way to create folder
 #TODO authenticate to github repo, git add. and git commit the file with dot
 #TODO do it N times based on mimic_n_commits function
 
@@ -14,37 +16,30 @@ default_args={
     'retry_interval' : timedelta(minutes=2)
 }
 
-# def get_n_of_commits(ti):
-#     n_commits=random.randint(1,10)
-#     ti.xcom_push(key="n_commits", value=n_commits)
+def get_n_of_commits(ti):
+    n_commits=random.randint(1,10)
+    ti.xcom_push(key="n_commits", value=n_commits)
 
-def make_change_to_file():
-    with open('dags/git_dir/file_to_push.txt', 'a') as file_with_updates:
-        file_with_updates.write('.')     
-    print(f'Wow, you\'ve done a change to the file, added {n_commits} dots')
+def do_n_commits(ti):
+    n_commits=ti.xcom_pull(task_ids='get_n_of_commits', key="n_commits")
+    for n in range(n_commits):
+        print(f"Doing {n}-th commit of {n_commits}")
+
 
 with DAG(
-    dag_id='mimic_activity_v12',
+    dag_id='mimic_activity_v14',
     default_args=default_args,
     start_date=datetime(2023,4, 19),
     schedule_interval='@daily'
 ) as dag:
+    task1=PythonOperator(
+        task_id='get_n_of_commits',
+        python_callable=get_n_of_commits
+    )
 
-    chain_operators=[]
-    n_commits=1
+    task2=PythonOperator(
+        task_id='do_n_commits',
+        python_callable=do_n_commits
+    )
 
-    for n in range(n_commits):
-        task1=PythonOperator(
-        task_id = f'make_{n}th_change_to_file',
-        python_callable=make_change_to_file
-        )
-        chain_operators.append(task1)
-
-        task2=BashOperator(
-            task_id = f'test_call_{n}_out_of_{n_commits}',
-            bash_command = 'pwd; sudo mkdir $active_dev/test_dir'
-        )
-        chain_operators.append(task2)
-
-    for i, val in enumerate(chain_operators[:-1]):
-        val.set_downstream(chain_operators[i+1])
+    task1.set_downstream(task2)
