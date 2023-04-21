@@ -23,7 +23,7 @@ def get_n_of_commits(ti):
 def do_n_commits(ti):
     n_commits=ti.xcom_pull(task_ids='get_n_of_commits', key="n_commits")
     for n in range(n_commits):
-        print(f"Doing {n}-th commit of {n_commits}")
+        print(f"Doing {n+1}-th commit of {n_commits}")
 
 
 with DAG(
