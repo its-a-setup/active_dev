@@ -1,6 +1,5 @@
 from datetime import datetime
 
-from airflow import DAG
 from airflow.decorators import task, dag
 
 #TODO Find a way to create folder

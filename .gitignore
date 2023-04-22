@@ -3,3 +3,4 @@ active_dev_env/
 logs/
 .env
 dags/__pycache__
+dags/.env
