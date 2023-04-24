@@ -1,8 +1,8 @@
 # active_dev
 ![license](https://img.shields.io/badge/license-GPL--3.0-orange)
 ## Description
-Are you a begginer programmer, who wants to boost their GitHub?
-Or maybe you are tired of recruiters asking why your GitHub is not active?
+Are you a beginner programmer, who wants to boost your GitHub? 
+Or maybe you are tired of recruiters asking why your GitHub is not active? 
 Or maybe you just want your GitHub to look like this?
 ![alt text](other/linus_gh.png)
 

@@ -14,7 +14,7 @@ def get_n_of_commits():
     import random
 
     UP_TO_N_COMMITS = os.getenv("UP_TO_N_COMMITS")
-    n = random.randint(2, UP_TO_N_COMMITS)
+    n = random.randint(2, int(UP_TO_N_COMMITS))
     my_list = list(range(1, n + 1))
     return my_list
 
@@ -44,8 +44,8 @@ def do_n_commits(n):
     )
     print(f"{n} - Successfully commited the file to github repo")
 
-    print("Waiting 120 seconds to avoid clashes with commits")
-    time.sleep(120)
+    print("Waiting 5 minutes to avoid clashes between commits")
+    time.sleep(300)
 
 
 @dag(
