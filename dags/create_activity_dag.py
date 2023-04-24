@@ -1,6 +1,10 @@
+import os
 from datetime import datetime
 
 from airflow.decorators import dag, task
+from dotenv import load_dotenv
+
+load_dotenv()
 
 default_args = {"owner": "active_developer", "retries": 5}
 
@@ -9,20 +13,17 @@ default_args = {"owner": "active_developer", "retries": 5}
 def get_n_of_commits():
     import random
 
-    n = random.randint(2, 10)
+    UP_TO_N_COMMITS = os.getenv("UP_TO_N_COMMITS")
+    n = random.randint(2, UP_TO_N_COMMITS)
     my_list = list(range(1, n + 1))
     return my_list
 
 
 @task
 def do_n_commits(n):
-    import os
     import time
 
-    from dotenv import load_dotenv
     from github import Github
-
-    load_dotenv()
 
     GITHUB_ACCESS_TOKEN = os.getenv("GITHUB_ACCESS_TOKEN")
     GITHUB_USERNAME = os.getenv("GITHUB_USERNAME")
