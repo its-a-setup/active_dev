@@ -1,11 +1,13 @@
-# active dev
-## Mimic activity in your GitHub profile
+# active_dev
+![license](https://img.shields.io/badge/license-GPL--3.0-orange)
+## Description
+Are you a begginer programmer, who wants to boost their GitHub?
+Or maybe you are tired of recruiters asking why your GitHub is not active?
+Or maybe you want your GitHub to look like this?
 
 ## Prerequisites
 1. Python3
 2. [Docker Desktop](https://www.docker.com/products/docker-desktop/)
-3. [curl](https://curl.se/)
-4. [airflow python package](https://pypi.org/project/apache-airflow/)
 
 ## Quickstart
 1. Clone the repo
