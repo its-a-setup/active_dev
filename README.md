@@ -15,15 +15,20 @@ Worry not, this Airflow project will help you to mimick the activity in your Git
 ## Quickstart
 1. Fork this repo
 2. Clone the repo to your local machine
-3. Create virtual environment for the project in your working directory:
-`python3 -m venv active_dev_env`
-4. Activate it:
-`source active_dev_env/bin/activate`
-5. Create directories for airflow in your working directory:
-`mkdir -p ./dags ./logs ./plugins`
-6. Initialize the db:
+3. Create directories for airflow in your working directory:
+`mkdir -p ./logs ./plugins`
+4. Rename airflow image in docker-compose.yaml from "extending_airflow:latest" -> "apache/airflow:2.5.3" (this is needed for docker hub to download the correct airflow image)
+5. Initialize the db:
 `docker compose up airflow-init`
-7. Run this command to extend your airflow image:
-`docker build . --extending_airflow:latest`
-8. Start containers for our application:
+6. Rename your image back from "apache/airflow:2.5.3" -> "extending_airflow:latest"
+6. Run this command to extend your airflow image:
+`docker build . --tag extending_airflow:latest`
+10. Start containers for our application:
 `docker compose up -d`
+10. Create new private repo in your GitHub and add there empty .txt file
+11. Create .env file in dags/ and edit it to include your data
+12. Open [airflow webserver](http://localhost:8080/home) in your browser and login with (login: airflow, password: airflow)
+13. Run "mimic_activity_dag"
+
+Congrats!
+

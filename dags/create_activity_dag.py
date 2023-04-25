@@ -49,10 +49,11 @@ def do_n_commits(n):
 
 
 @dag(
-    dag_id="mimic_activity_v34",
+    dag_id="mimic_activity_dag",
     default_args=default_args,
     start_date=datetime(2023, 4, 23),
     schedule_interval="@daily",
+    catchup=False
 )
 def my_dag():
     do_n_commits.expand(n=get_n_of_commits())
