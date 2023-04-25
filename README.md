@@ -1,4 +1,6 @@
 # active_dev
+![Apache Airflow](https://img.shields.io/badge/Apache%20Airflow-017CEE?logo=Apache%20Airflow&logoColor=white)
+![Python](https://img.shields.io/badge/python-3670A0?logo=python&logoColor=ffdd54)
 ![license](https://img.shields.io/badge/license-GPL--3.0-orange)
 ## Description
 Are you a beginner programmer, who wants to boost your GitHub? 
