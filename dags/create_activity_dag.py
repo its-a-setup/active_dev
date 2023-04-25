@@ -5,15 +5,15 @@ from airflow.decorators import dag, task
 from dotenv import load_dotenv
 
 load_dotenv()
+UP_TO_N_COMMITS = os.getenv("UP_TO_N_COMMITS")
 
-default_args = {"owner": "active_developer", "retries": 5}
+default_args = {"owner": "active_developer", "retries": UP_TO_N_COMMITS}
 
 
 @task
 def get_n_of_commits():
     import random
 
-    UP_TO_N_COMMITS = os.getenv("UP_TO_N_COMMITS")
     n = random.randint(2, int(UP_TO_N_COMMITS))
     my_list = list(range(1, n + 1))
     return my_list
