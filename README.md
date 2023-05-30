@@ -14,7 +14,7 @@ Worry not, this Airflow project will help you to mimic the activity in your GitH
 1. [Python3](https://www.python.org/downloads/)
 2. [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 
-## Quickstart
+## Quickstart for on-premises Airflow
 1. Fork this repo
 2. Clone the repo to your local machine
 3. Create directories for airflow in your working directory:
@@ -31,5 +31,12 @@ Worry not, this Airflow project will help you to mimic the activity in your GitH
 11. Create .env file in dags/ and edit it to include your data
 12. Open [airflow webserver](http://localhost:8080/home) in your browser and log in with (login: airflow, password: airflow)
 13. Run "mimic_activity_dag"
+
+## Quickstart for Google Cloud Composer (managed Airflow)
+1. Set up the account in GCP
+2. Create a Composer instance
+3. Add "create_activity_dat_composer.py" to the DAG folder
+4. Add variables from the .env file to Airflow's variables list
+5. Run "mimic_activity_dag_composer"
 
 Congrats, now your GitHub will stay active forever!
