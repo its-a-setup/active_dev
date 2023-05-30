@@ -1,11 +1,13 @@
-import os
 from datetime import datetime
+from airflow.models import Variable
 
 from airflow.decorators import dag, task
-from dotenv import load_dotenv
 
-load_dotenv()
-UP_TO_N_COMMITS = os.getenv("UP_TO_N_COMMITS")
+GITHUB_ACCESS_TOKEN = Variable.get("GITHUB_ACCESS_TOKEN")
+GITHUB_USERNAME = Variable.get("GITHUB_USERNAME")
+GITHUB_REPO = Variable.get("GITHUB_REPO")
+FILE_NAME = Variable.get("FILE_NAME")
+UP_TO_N_COMMITS = Variable.get("UP_TO_N_COMMITS")
 
 default_args = {"owner": "active_developer", "retries": UP_TO_N_COMMITS}
 
@@ -24,11 +26,6 @@ def do_n_commits(n):
     import time
 
     from github import Github
-
-    GITHUB_ACCESS_TOKEN = os.getenv("GITHUB_ACCESS_TOKEN")
-    GITHUB_USERNAME = os.getenv("GITHUB_USERNAME")
-    GITHUB_REPO = os.getenv("GITHUB_REPO")
-    FILE_NAME = os.getenv("FILE_NAME")
 
     g = Github(GITHUB_ACCESS_TOKEN)
     my_repo = g.get_repo(f"{GITHUB_USERNAME}/{GITHUB_REPO}")
@@ -49,10 +46,10 @@ def do_n_commits(n):
 
 
 @dag(
-    dag_id="mimic_activity_dag",
+    dag_id="mimic_activity_dag_composer",
     default_args=default_args,
     start_date=datetime(2023, 4, 23),
-    schedule_interval="@daily",
+    schedule_interval="0 20 * * *",
     catchup=False
 )
 def my_dag():
